@@ -1,0 +1,24 @@
+module FA_4bit(s,c3,a,b,cin);
+input cin;
+output c3;
+output[3:0]s;
+input[3:0]a,b;
+wire [2:0]c;
+FA FA0(s[0],c[0],a[0],b[0],cin);
+FA FA1(s[1],c[1],a[1],b[1],c[0]);
+FA FA2(s[2],c[2],a[2],b[2],c[1]);
+FA FA3(s[3],c3,a[3],b[3],c[2]);
+endmodule
+
+
+module FA(so,co,a,b,c);
+input a,b,c;
+output so,co;
+wire p,q,r;
+assign p=a^b;
+assign r=a&b;
+assign so=p^c;
+assign q=p&c;
+assign co=q|r;
+endmodule
+
