@@ -1,0 +1,8 @@
+
+module Comparator(G,E,S,A,B);
+input A,B;
+output G,E,S;
+assign G = A&~B;
+assign E = (~A&~B) | (A&B);
+assign S = ~A&B;
+endmodule
