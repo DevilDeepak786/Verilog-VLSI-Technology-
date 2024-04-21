@@ -1,0 +1,47 @@
+Code;
+module SRFF(input s,r,rst,clk, output q); 
+reg q; 
+always @ (posedge clk) 
+if(rst == 1) 
+begin 
+q = 0; 
+end 
+else if(rst == 0) 
+begin 
+if(s == 0 && r == 0) 
+begin 
+q = q; 
+end 
+else if(s == 0 && r == 1) 
+begin 
+q = 0; 
+end 
+else if(s == 1 && r == 0) 
+begin 
+q = 1; 
+end 
+else if(s == 1 && r == 1) 
+begin 
+q = 1'b x; 
+end 
+end 
+endmodule 
+
+Code Test Bench:
+module SRFF_tb(); 
+reg s,r,clk,rst; 
+wire q; 
+SRFF f(s,r,rst,clk,q); 
+initial begin
+clk = 1'b 1; 
+forever #20 
+clk = ~clk; 
+end 
+initial begin
+rst = 1;s=1;r=0;#50; 
+rst = 0;s=0;r=0;#50 ;
+rst = 0;s=0;r=1;#50 ;
+rst = 0;s=1;r=0;#50 ;
+rst = 0;s=1;r=1;#50; 
+end 
+endmodule 
