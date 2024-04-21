@@ -1,0 +1,41 @@
+Code:
+
+module TFF(T,clk,rst,Q); 
+input T,clk,rst; 
+output Q; 
+reg Q; 
+always@(posedge clk) 
+if(rst==1) 
+begin 
+Q=0; 
+end 
+else if(rst==0) 
+begin 
+if(T==0) 
+begin 
+Q=0; 
+end 
+else if(T==1) 
+begin 
+Q=1; 
+end 
+end 
+endmodule
+
+Code test bench:
+module TFF_tb(); 
+reg T,clk,rst; 
+wire Q; 
+TFF a(T,clk,rst,Q); 
+initial begin
+clk=1'b1; 
+forever #20 
+clk=~clk; 
+end 
+initial begin
+rst=1;T=0;#50; 
+rst=1;T=1;#50; 
+rst=0;T=1;#50; 
+rst=0;T=0;#50; 
+end 
+endmodule 
