@@ -1,0 +1,42 @@
+Code:
+
+module DFF(D,clk,rst,Q); 
+input D,clk,rst; 
+output Q; 
+reg Q; 
+always@(posedge clk) 
+if(rst==1) 
+begin 
+Q=0; 
+end 
+else if(rst==0) 
+begin 
+if(D==0) 
+begin 
+Q=0; 
+end 
+else if(D==1) 
+begin 
+Q=1; 
+end
+end
+endmodule
+
+Code Test Bench:
+
+module DFF_tb(); 
+reg D,clk,rst; 
+wire Q; 
+DFF a(D,clk,rst,Q); 
+initial begin
+clk=1'b1; 
+forever #20 
+clk=~clk; 
+end 
+initial begin
+rst=1;D=0;#50; 
+rst=1;D=1;#50; 
+rst=0;D=1;#50; 
+rst=0;D=0;#50; 
+end 
+endmodule
