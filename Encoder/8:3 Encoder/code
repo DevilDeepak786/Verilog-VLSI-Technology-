@@ -1,0 +1,52 @@
+Code:
+module Encoder(output Z0,Z1,Z2,input I0,I1,I2,I3,I4,I5,I6,I7);
+wire Y0,Y1,Y2,Y3,OR45,A1,A2;
+MiniEncoder f1(Y0,Y1,I0,I1,I2,I3);
+MiniEncoder f2(Y2,Y3,I4,I5,I6,I7);
+or O1(OR45,I4,I5);
+or O2(Z2,Y3,OR45);
+and AN1(A1,Y0,~Z2);
+and AN2(A2,Y1,~Z2);
+or O3(Z1,A2,Y3);
+or O4(Z0,A1,Y2);
+endmodule
+module MiniEncoder(output Y0,Y1,input I0,I1,I2,I3);
+reg Y0,Y1;
+always @(I0 or I1 or I2 or I3)
+if(I3==1)
+begin
+Y1=1;Y0=1;
+end
+else if(I3==0 && I2==1)
+begin
+Y1=1;Y0=0;
+end
+else if(I3==0 && I2==0 && I1==1)
+begin
+Y1=0;Y0=1;
+end
+else if(I3==0 && I2==0 && I1==0 && I0==1)
+begin
+Y1=0;Y0=0;
+end
+endmodule
+
+
+
+Code Test Bench:
+
+module Encoder_TB();
+reg I0,I1,I2,I3,I4,I5,I6,I7;
+wire Y0,Y1,Y2;
+Encoder f1(Y0,Y1,Y2,I0,I1,I2,I3,I4,I5,I6,I7);
+initial begin
+I7=1;I6=0;I5=0;I4=0;I3=0;I2=0;I1=0;I0=0;#50;
+I7=0;I6=1;I5=0;I4=0;I3=0;I2=0;I1=0;I0=0;#50;
+I7=0;I6=0;I5=1;I4=0;I3=0;I2=0;I1=0;I0=0;#50;
+I7=0;I6=0;I5=0;I4=1;I3=0;I2=0;I1=0;I0=0;#50;
+I7=0;I6=0;I5=0;I4=0;I3=1;I2=0;I1=0;I0=0;#50;
+I7=0;I6=0;I5=0;I4=0;I3=0;I2=1;I1=0;I0=0;#50;
+I7=0;I6=0;I5=0;I4=0;I3=0;I2=0;I1=1;I0=0;#50;
+I7=0;I6=0;I5=0;I4=0;I3=0;I2=0;I1=0;I0=1;#50;
+end
+endmodule
