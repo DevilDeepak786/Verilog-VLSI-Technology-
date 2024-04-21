@@ -1,0 +1,22 @@
+Code:
+module Encoder(o0,o1,i0,i1,i2,i3);
+input i0,i1,i2,i3;
+output o0,o1;
+assign o1=i1|i3;
+assign o0=i2|i3;
+endmodule
+
+
+
+TestBench code:
+module Encoder_tb();
+reg i0,i1,i2,i3;
+wire o0,o1;
+Encoder xx(o0,o1,i0,i1,i2,i3);
+initial begin
+i0=1;i1=0;i2=0;i3=0;#50;
+i0=0;i1=1;i2=0;i3=0;#50;
+i0=0;i1=0;i2=1;i3=0;#50;
+i0=0;i1=0;i2=0;i3=1;#50;
+end
+endmodule
