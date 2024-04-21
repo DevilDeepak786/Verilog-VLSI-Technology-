@@ -1,0 +1,47 @@
+Code:
+module JKFF(input j,k,rst,clk, output q); 
+reg q; 
+always @ (posedge clk) 
+if(rst == 1) 
+begin 
+q = 0; 
+end
+else if(rst == 0)
+begin 
+if( j== 0 && k == 0) 
+begin 
+q = q; 
+end 
+else if(j == 0 && k == 1) 
+begin 
+q = 0; 
+end 
+else if(j == 1 && k == 0) 
+begin 
+q = 1; 
+end 
+else if(j == 1 && k == 1) 
+begin 
+q = ~q; 
+end 
+end 
+endmodule 
+
+Code Test Bench:
+module JK_tb(); 
+reg j,k,clk,rst; 
+wire q; 
+JKFF f(j,k,rst,clk,q); 
+initial begin
+clk = 1'b 1; 
+forever #20 
+clk = ~clk;
+end
+initial begin
+rst = 1;j=1;k=0;#50;
+rst = 0;j=0;k=0;#50;
+rst = 0;j=0;k=1;#50;
+rst = 0;j=1;k=0;#50;
+rst = 0;j=1;k=1;#50; 
+end 
+endmodule 
